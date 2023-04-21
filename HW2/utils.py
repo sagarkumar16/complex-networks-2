@@ -1,13 +1,21 @@
 from collections import defaultdict
 import numpy as np
-import math
-import matplotlib.pyplot as plt
 from statistics import mean
 from scipy.sparse import dok_matrix, csr_matrix, triu, tril
 from random import randint
-import powerlaw as pl
-import tail_estimation as te
+
 from tqdm.notebook import tqdm
+
+"""
+utils.py
+
+Written by Sagar Kumar, April 2023
+
+This is a Python script with useful functions which I have written and which are utilized throughout the scripts which 
+have been written for Problem 3, Homework 2 in NETS6116. 
+
+Some come from HW1. 
+"""
 
 
 def count_faster(l):
@@ -24,7 +32,7 @@ def count_faster(l):
     return [(key, dic[key]) for key in dic.keys()]
 
 
-################################################# Problem 2.1 ##################################################################
+
 def distributionBin(x: 'input data',
                     B: 'number of bins'
                     ):
@@ -44,7 +52,7 @@ def distributionBin(x: 'input data',
     xmax = max(x)
 
     # creating the B+1 bin edges
-    bin_edges = np.logspace(np.log10(xmin), np.log10(xmax), num=B+1)
+    bin_edges = np.logspace(max(1,np.log10(xmin)), np.log10(xmax), num=B+1)
 
     # using numpy's histogram function get distributions
     density, _ = np.histogram(x, bins=bin_edges, density=True)
@@ -55,7 +63,7 @@ def distributionBin(x: 'input data',
 
     return xout, density
 
-################################################# Problem 2.2 ##################################################################
+
 def functionBin(x: 'preimage',
                 y: 'function output for some function y | y_i=y(x)',
                 B: 'number of bins'
@@ -78,7 +86,7 @@ def functionBin(x: 'preimage',
     xmax = max(x)
 
     # creating the B+1 bin edges
-    bin_edges = np.logspace(np.log10(xmin), np.log10(xmax), num=B+1)
+    bin_edges = np.logspace(max(1,np.log10(xmin)), np.log10(xmax), num=B+1)
 
     # obtaining bin midpoints for cleaner absciss
     log_be = np.log10(bin_edges)
@@ -110,7 +118,7 @@ def functionBin(x: 'preimage',
 
     return xout, yout
 
-################################################# Problem 2.3 ##################################################################
+
 def simpleSF(n: 'graph size' = 10**4,
              s: 'number of samples' = 10,
              sparse: 'choice of numpy vs. scipy sparse matrix' = False
@@ -167,4 +175,3 @@ def simpleSF(n: 'graph size' = 10**4,
         outlist.append(A)
 
     return outlist
-
